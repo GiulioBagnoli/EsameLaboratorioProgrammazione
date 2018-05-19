@@ -1,1 +1,1 @@
-# EsameLaboratorioProgrammazione
+Progetto sviluppato da Bagnoli Giulio per il corso di Programmazione. Descrizione :classi template per matrici con implementazione di operazioni come prodotto e trasposta, oltre che selezione di righe e colonne, unit testing.
