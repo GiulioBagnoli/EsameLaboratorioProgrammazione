@@ -5,7 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_subdirectory(test)
 
-set(SOURCE_FILES main.cpp Matrix.h Matrix.cpp)
+set(SOURCE_FILES Matrix.h Matrix.cpp main.cpp)
 add_executable(matrici main.cpp)
 
 add_library(core ${SOURCE_FILES})

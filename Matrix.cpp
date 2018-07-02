@@ -17,9 +17,8 @@ Matrix<t>::Matrix(int numRows, int numColumns, t *values) : Matrix(numRows, numC
 
 template<typename t>
 Matrix<t>::Matrix(const Matrix<t> &other) : Matrix(other.numRows, other.numColumns) {
-    for (int col = 0; col < numColumns; col++)
-        for (int row = 0; row < numRows; row++)
-            data[col + row * numColumns] = other.data[col + row * numColumns];
+    for (int i = 0; i < numColumns * numRows; i++)
+        data[i] = other.data[i];
 }
 
 template<typename t>
@@ -182,7 +181,7 @@ Matrix<t> Matrix<t>::operator*(const t &scalar) const {
 }
 
 template<typename t>
-t &Matrix<t>::operator()(int rowIndex, int columnIndex) throw(out_of_range) // ???????
+t &Matrix<t>::operator()(int rowIndex, int columnIndex) throw(out_of_range)
 {
     if (rowIndex < 0 || rowIndex >= numRows || columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indici di riga e/o colonna non validi");

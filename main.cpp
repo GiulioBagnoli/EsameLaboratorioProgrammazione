@@ -6,18 +6,12 @@
 using namespace std;
 
 int main() {
-    Matrix<float> mat(5, 5);
+    Matrix<float> mat(4, 4);
+    mat.setAllValues(7);
+    mat.setValue(1,2,2);
+    mat.setValue(3,3,6);
+    mat.setValue(2,0,11);
 
-    mat.setAllValues(1);
-    mat.setValue(3, 1, 9.2f);
-    mat(2, 2) = 7;
-    mat(3, 4) = 7;
-    float value = mat(3, 1);
-
-
-    Matrix<float> row = mat.getRow(2);
-    row(0, 4) = 3.5f;
-    mat.setRow(0, row);
 
     Matrix<float> trasposta = mat.transpose();
     Matrix<float> subMat = mat.subMatrix(0, 0);
@@ -27,6 +21,5 @@ int main() {
     cout << "determinante: " << determinante << endl;
     cout << "trasposta: " << trasposta.toString() << endl;
     cout << "subMat: " << subMat.toString() << endl;
-
 
 }
