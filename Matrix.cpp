@@ -2,63 +2,63 @@
 #include "Matrix.h"
 
 
-template<typename t>
-Matrix<t>::Matrix(int Rows, int Columns) {
+template<typename T>
+Matrix<T>::Matrix(int Rows, int Columns) {
     numColumns = Columns;
     numRows = Rows;
-    data = new t[numRows * numColumns];
+    data = new T[numRows * numColumns];
 }
 
-template<typename t>
-Matrix<t>::Matrix(int numRows, int numColumns, t *values) : Matrix(numRows, numColumns) {
+template<typename T>
+Matrix<T>::Matrix(int numRows, int numColumns, T *values) : Matrix(numRows, numColumns) {
     for (int i = 0; i < numRows * numColumns; i++)
         data[i] = values[i];
 }
 
-template<typename t>
-Matrix<t>::Matrix(const Matrix<t> &other) : Matrix(other.numRows, other.numColumns) {
+template<typename T>
+Matrix<T>::Matrix(const Matrix<T> &other) : Matrix(other.numRows, other.numColumns) {
     for (int i = 0; i < numColumns * numRows; i++)
         data[i] = other.data[i];
 }
 
-template<typename t>
-Matrix<t>::~Matrix() {
+template<typename T>
+Matrix<T>::~Matrix() {
     delete[]data;
 }
 
-template<typename t>
-int Matrix<t>::getNumRows() const {
+template<typename T>
+int Matrix<T>::getNumRows() const {
     return numRows;
 }
 
-template<typename t>
-int Matrix<t>::getNumColumns() const {
+template<typename T>
+int Matrix<T>::getNumColumns() const {
     return numColumns;
 }
 
-template<typename t>
-void Matrix<t>::setAllValues(const t &value) {
+template<typename T>
+void Matrix<T>::setAllValues(const T &value) {
     for (int i = 0; i < numRows * numColumns; i++)
         data[i] = value;
 }
 
-template<typename t>
-void Matrix<t>::setValue(int rowIndex, int columnIndex, const t &value) throw(out_of_range) {
+template<typename T>
+void Matrix<T>::setValue(int rowIndex, int columnIndex, const T &value) throw(out_of_range) {
     if (rowIndex < 0 || rowIndex >= numRows || columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indici di riga e/o colonna non validi");
     data[columnIndex + rowIndex * numColumns] = value;
 }
 
-template<typename t>
-t Matrix<t>::getValue(int rowIndex, int columnIndex) const throw(out_of_range) {
+template<typename T>
+T Matrix<T>::getValue(int rowIndex, int columnIndex) const throw(out_of_range) {
     if (rowIndex < 0 || rowIndex >= numRows || columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indici di riga e/o colonna non validi");
     return data[columnIndex + rowIndex * numColumns];
 }
 
 
-template<typename t>
-void Matrix<t>::setRow(int rowIndex, Matrix<t> rowMat) throw(out_of_range, invalid_argument) {
+template<typename T>
+void Matrix<T>::setRow(int rowIndex, Matrix<T> rowMat) throw(out_of_range, invalid_argument) {
     if (rowIndex < 0 || rowIndex >= numRows)
         throw out_of_range("Indice non valido");
 
@@ -69,8 +69,8 @@ void Matrix<t>::setRow(int rowIndex, Matrix<t> rowMat) throw(out_of_range, inval
         this->data[i + this->numColumns * rowIndex] = rowMat.data[i];
 }
 
-template<typename t>
-void Matrix<t>::setColumn(int columnIndex, Matrix<t> colMat) throw(out_of_range, invalid_argument) {
+template<typename T>
+void Matrix<T>::setColumn(int columnIndex, Matrix<T> colMat) throw(out_of_range, invalid_argument) {
     if (columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indice non valido");
 
@@ -81,24 +81,24 @@ void Matrix<t>::setColumn(int columnIndex, Matrix<t> colMat) throw(out_of_range,
         this->data[i * this->numColumns + columnIndex] = colMat.data[i];
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::getRow(int rowIndex) const throw(out_of_range) {
+template<typename T>
+Matrix<T> Matrix<T>::getRow(int rowIndex) const throw(out_of_range) {
     if (rowIndex < 0 || rowIndex >= numRows)
         throw out_of_range("Indice non valido");
 
-    Matrix<t> output(1, numColumns);
+    Matrix<T> output(1, numColumns);
     for (int i = 0; i < numColumns; i++)
         output.data[i] = this->data[this->numColumns * rowIndex + i];
 
     return output;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::getColumn(int columnIndex) const throw(out_of_range) {
+template<typename T>
+Matrix<T> Matrix<T>::getColumn(int columnIndex) const throw(out_of_range) {
     if (columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indice non valido");
 
-    Matrix<t> output(numRows, 1);
+    Matrix<T> output(numRows, 1);
     for (int i = 0; i < numRows; i++)
         output.data[i] = this->data[i * this->numColumns + columnIndex];
 
@@ -106,8 +106,8 @@ Matrix<t> Matrix<t>::getColumn(int columnIndex) const throw(out_of_range) {
 }
 
 
-template<typename t>
-bool Matrix<t>::operator==(const Matrix<t> &other) const {
+template<typename T>
+bool Matrix<T>::operator==(const Matrix<T> &other) const {
     if (numRows != other.numRows || numColumns != other.numColumns)
         return false;
     for (int i = 0; i < numRows * numColumns; i++)
@@ -116,52 +116,52 @@ bool Matrix<t>::operator==(const Matrix<t> &other) const {
     return true;
 }
 
-template<typename t>
-bool Matrix<t>::operator!=(const Matrix<t> &other) const {
+template<typename T>
+bool Matrix<T>::operator!=(const Matrix<T> &other) const {
     return !(*this == other);
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::operator=(const Matrix<t> &other) {
+template<typename T>
+Matrix<T> Matrix<T>::operator=(const Matrix<T> &other) {
     if (this != &other) {
         this->~Matrix();
         numRows = other.numRows;
         numColumns = other.numColumns;
-        data = new t[numRows * numColumns];
+        data = new T[numRows * numColumns];
         for (int i = 0; i < numRows * numColumns; i++)
             data[i] = other.data[i];
     }
     return *this;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::operator+(const Matrix<t> &other) const throw(invalid_argument) {
+template<typename T>
+Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const throw(invalid_argument) {
     if (numRows != other.numRows || numColumns != other.numColumns)
         throw invalid_argument("Dimensioni matrici differenti");
 
-    Matrix<t> result(numRows, numColumns);
+    Matrix<T> result(numRows, numColumns);
     for (int i = 0; i < numRows * numColumns; i++)
         result.data[i] = data[i] + other.data[i];
     return result;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::operator-(const Matrix<t> &other) const throw(invalid_argument) {
+template<typename T>
+Matrix<T> Matrix<T>::operator-(const Matrix<T> &other) const throw(invalid_argument) {
     if (numRows != other.numRows || numColumns != other.numColumns)
         throw invalid_argument("Dimensioni matrici differenti");
 
-    Matrix<t> result(numRows, numColumns);
+    Matrix<T> result(numRows, numColumns);
     for (int i = 0; i < numRows * numColumns; i++)
         result.data[i] = data[i] - other.data[i];
     return result;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::operator*(const Matrix<t> &other) const throw(invalid_argument) {
+template<typename T>
+Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const throw(invalid_argument) {
     if (numColumns != other.numRows)
         throw invalid_argument("Dimensioni non congrue per prodotto");
 
-    Matrix<t> result(numRows, other.numColumns);
+    Matrix<T> result(numRows, other.numColumns);
     result.setAllValues(0);
     for (int row = 0; row < numRows; row++)
         for (int col = 0; col < other.numColumns; col++)
@@ -172,32 +172,31 @@ Matrix<t> Matrix<t>::operator*(const Matrix<t> &other) const throw(invalid_argum
     return result;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::operator*(const t &scalar) const {
-    Matrix<t> result(numRows, numColumns);
+template<typename T>
+Matrix<T> Matrix<T>::operator*(const T &scalar) const {
+    Matrix<T> result(numRows, numColumns);
     for (int i = 0; i < numColumns * numRows; i++)
         result.data[i] = data[i] * scalar;
     return result;
 }
 
-template<typename t>
-t &Matrix<t>::operator()(int rowIndex, int columnIndex) throw(out_of_range)
+template<typename T>
+T &Matrix<T>::operator()(int rowIndex, int columnIndex) throw(out_of_range)
 {
     if (rowIndex < 0 || rowIndex >= numRows || columnIndex < 0 || columnIndex >= numColumns)
         throw out_of_range("Indici di riga e/o colonna non validi");
     return data[columnIndex + rowIndex * numColumns];
 }
 
-
-template<typename t>
-Matrix<t> Matrix<t>::subMatrix(int excludingRow, int excludingColumn) const throw(logic_error, out_of_range) {
+template<typename T>
+Matrix<T> Matrix<T>::subMatrix(int excludingRow, int excludingColumn) const throw(logic_error, out_of_range) {
     if (numRows <= 1 || numColumns <= 1)
         throw logic_error("Matrice troppo piccola per estrarre una sottomatrice");
 
     if (excludingRow < 0 || excludingRow >= numRows || excludingColumn < 0 || excludingColumn >= numColumns)
         throw out_of_range("Indici di riga e/o colonna non validi");
 
-    Matrix<t> result(numRows - 1, numColumns - 1);
+    Matrix<T> result(numRows - 1, numColumns - 1);
 
     for (int col = 0; col < numColumns; col++) {
         if (col == excludingColumn)
@@ -214,16 +213,15 @@ Matrix<t> Matrix<t>::subMatrix(int excludingRow, int excludingColumn) const thro
     return result;
 }
 
-
-template<typename t>
-t Matrix<t>::determinant() const throw(logic_error) {
+template<typename T>
+T Matrix<T>::determinant() const throw(logic_error) {
     if (numRows != numColumns)
         throw logic_error("Impossibile calcolare il determinante su una matrice non quadrata");
 
     if (numRows == 2)
         return data[0] * data[3] - data[1] * data[2];
 
-    t det = 0;
+    T det = 0;
 
     for (int col = 0; col < numColumns; col++)
         det += data[col] * subMatrix(0, col).determinant() * (col % 2 == 0 ? 1 : -1);
@@ -231,9 +229,9 @@ t Matrix<t>::determinant() const throw(logic_error) {
     return det;
 }
 
-template<typename t>
-Matrix<t> Matrix<t>::transpose() const {
-    Matrix<t> result(numColumns, numRows);
+template<typename T>
+Matrix<T> Matrix<T>::transpose() const {
+    Matrix<T> result(numColumns, numRows);
 
     for (int row = 0; row < numRows; row++)
         for (int col = 0; col < numColumns; col++)
@@ -242,8 +240,8 @@ Matrix<t> Matrix<t>::transpose() const {
     return result;
 }
 
-template<typename t>
-string Matrix<t>::toString() const {
+template<typename T>
+string Matrix<T>::toString() const {
     string toReturn = "Matrix of " + to_string(numRows) + " rows and " + to_string(numColumns) + " columns:\n";
     for (int row = 0; row < numRows; row++) {
         toReturn += "\t";

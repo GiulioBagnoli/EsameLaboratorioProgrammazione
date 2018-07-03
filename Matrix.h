@@ -9,14 +9,14 @@
 
 using namespace std;
 
-template<typename t>
+template<typename T>
 class Matrix {
 public:
     Matrix(int numRows, int numColumns);
 
-    Matrix(int numRows, int numColumns, t *values);
+    Matrix(int numRows, int numColumns, T *values);
 
-    Matrix(const Matrix<t> &other);
+    Matrix(const Matrix<T> &other);
 
     ~Matrix();
 
@@ -24,47 +24,47 @@ public:
 
     int getNumRows() const;
 
-    void setAllValues(const t &value);
+    void setAllValues(const T &value);
 
-    void setValue(int rowIndex, int columnIndex, const t &value) throw(out_of_range);
+    void setValue(int rowIndex, int columnIndex, const T &value) throw(out_of_range);
 
-    t getValue(int rowIndex, int columnIndex) const throw(out_of_range);
+    T getValue(int rowIndex, int columnIndex) const throw(out_of_range);
 
-    void setRow(int rowIndex, Matrix<t> rowMat) throw(out_of_range, invalid_argument);
+    void setRow(int rowIndex, Matrix<T> rowMat) throw(out_of_range, invalid_argument);
 
-    void setColumn(int columnIndex, Matrix<t> colMat) throw(out_of_range, invalid_argument);
+    void setColumn(int columnIndex, Matrix<T> colMat) throw(out_of_range, invalid_argument);
 
-    Matrix<t> getRow(int rowIndex) const throw(out_of_range);
+    Matrix<T> getRow(int rowIndex) const throw(out_of_range);
 
-    Matrix<t> getColumn(int columnIndex) const throw(out_of_range);
+    Matrix<T> getColumn(int columnIndex) const throw(out_of_range);
 
     bool operator==(const Matrix &other) const;
 
     bool operator!=(const Matrix &other) const;
 
-    Matrix<t> operator=(const Matrix<t> &other);
+    Matrix <T> operator=(const Matrix<T> &other);
 
-    Matrix<t> operator+(const Matrix<t> &other) const throw(invalid_argument);
+    Matrix<T> operator+(const Matrix<T> &other) const throw(invalid_argument);
 
-    Matrix<t> operator-(const Matrix<t> &other) const throw(invalid_argument);
+    Matrix<T> operator-(const Matrix<T> &other) const throw(invalid_argument);
 
-    Matrix<t> operator*(const Matrix<t> &other) const throw(invalid_argument);
+    Matrix<T> operator*(const Matrix<T> &other) const throw(invalid_argument);
 
-    Matrix<t> operator*(const t &scalar) const;
+    Matrix<T> operator*(const T &scalar) const;
 
-    t &operator()(int rowIndex, int columnIndex) throw(out_of_range);
+    T &operator()(int rowIndex, int columnIndex) throw(out_of_range);
 
-    Matrix<t> subMatrix(int excludingRow, int excludingColumn) const throw(logic_error, out_of_range);
+    Matrix<T> subMatrix(int excludingRow, int excludingColumn) const throw(logic_error, out_of_range);
 
-    t determinant() const throw(logic_error);
+    T determinant() const throw(logic_error);
 
-    Matrix<t> transpose() const;
+    Matrix<T> transpose() const;
 
     string toString() const;
 
 private:
     int numRows, numColumns;
-    t *data;
+    T *data;
 };
 
 
